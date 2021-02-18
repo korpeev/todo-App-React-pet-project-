@@ -1,5 +1,6 @@
 import React from "react"
 import AddListButton from "./components/AddListButton"
+import Tasks from "./components/Tasks"
 import List from "./components/List"
 import DB from "./assets/db.json"
 function App() {
@@ -38,7 +39,7 @@ function App() {
         <AddListButton setLists={setLists} lists={lists} colors={DB.colors} />
       </div>
       <div className='todo__tasks'>
-        <h1>Frontend</h1>
+        <Tasks />
       </div>
     </div>
   )

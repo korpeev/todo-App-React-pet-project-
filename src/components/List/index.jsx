@@ -12,12 +12,7 @@ function List({ setLists, items, active, isRemovable, onVisiblePoppup }) {
     <ul className='todo__list'>
       {items.map((item, index) => {
         return (
-          <li
-            key={index}
-            className={classNames(item.className, {
-              active: active,
-            })}
-          >
+          <li key={index} className={classNames({ active: item.active })}>
             <i>{item.icon ? item.icon : <Badge color={item.color} />}</i>
             <span onClick={onVisiblePoppup}>{item.name}</span>
             {isRemovable && (
