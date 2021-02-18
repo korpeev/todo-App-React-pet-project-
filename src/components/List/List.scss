@@ -1,14 +1,36 @@
 .todo__list {
+  padding: 25px 0 0 0;
+  $self: &;
   li {
     display: flex;
     align-items: center;
     padding: 10px 12px;
     margin-bottom: 5px;
     cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.781);
+      border-radius: 4px;
+
+      #{$self}-close {
+        opacity: 0.2;
+      }
+    }
+    #{$self}-close {
+      opacity: 0;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
     &.active {
       background: #ffffff;
       box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
       border-radius: 4px;
+    }
+    span {
+      flex: 1;
     }
     i {
       margin-right: 10px;
@@ -19,20 +41,5 @@
         }
       }
     }
-  }
-}
-
-.badge {
-  height: 10px;
-  width: 10px;
-  border-radius: 20px;
-  &-green {
-    background-color: #42b883;
-  }
-  &-blue {
-    background-color: #64c4ed;
-  }
-  &-pink {
-    background-color: #ffbbcc;
   }
 }
