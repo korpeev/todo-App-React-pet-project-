@@ -2,18 +2,56 @@
   "lists": [
     {
       "id": 2,
-      "name": "Фронтенд",
-      "colorId": 4
+      "name": "qwerty",
+      "colorId": 4,
+      "tasks": [
+        {
+          "id": 1,
+          "listId": 2,
+          "text": "Изучить JavaScript",
+          "completed": true
+        },
+        {
+          "id": 2,
+          "listId": 2,
+          "text": "Изучить паттерны проектирования",
+          "completed": false
+        },
+        {
+          "id": 3,
+          "listId": 2,
+          "text": "ReactJS Hooks (useState, useReducer, useEffect и т.д.)",
+          "completed": true
+        },
+        {
+          "id": 4,
+          "listId": 2,
+          "text": "Redux (redux-observable, redux-saga)",
+          "completed": false
+        },
+        {
+          "listId": 2,
+          "text": "123",
+          "completed": true,
+          "id": 5
+        },
+        {
+          "listId": 2,
+          "text": "222",
+          "completed": true,
+          "id": 12
+        }
+      ],
+      "color": {
+        "id": 4,
+        "hex": "#FFBBCC",
+        "name": "pink"
+      }
     },
     {
       "id": 4,
       "name": "Книги",
       "colorId": 2
-    },
-    {
-      "id": 5,
-      "name": "Личное",
-      "colorId": 1
     },
     {
       "name": "Спорт",
@@ -29,7 +67,11 @@
       "id": 10
     },
     {
-      "name": "",
+      "name": "фывфывфыв",
+      "colorId": 8,
+      "color": {
+        "name": "red"
+      },
       "id": 11
     }
   ],

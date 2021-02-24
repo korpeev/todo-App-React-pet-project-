@@ -1,15 +1,47 @@
-import React from "react"
+import React, { useEffect } from "react"
 import AddListButton from "./components/AddListButton"
 import Tasks from "./components/Tasks"
 import List from "./components/List"
-import DB from "./assets/db.json"
+
 function App() {
-  const [lists, setLists] = React.useState(
-    DB.lists.map((item) => {
-      item.color = DB.colors.filter((color) => color.id === item.id)[0].name
+  const [lists, setLists] = React.useState(null)
+  const [color, setColor] = React.useState(null)
+  const [activeItem, setActiveItem] = React.useState(null)
+  useEffect(() => {
+    fetch("http://localhost:3001/lists?_expand=color&_embed=tasks")
+      .then((res) => res.json())
+      .then((res) => {
+        setLists(res)
+      })
+
+    fetch("http://localhost:3001/colors").then(async (res) => {
+      const data = await res.json()
+      await setColor(data)
+    })
+  }, [])
+  const renameTitle = (id) => {
+    const text = window.prompt()
+    const newList = lists.map((item) => {
+      if (item.id === id) {
+        item.name = text
+      }
       return item
     })
-  )
+    console.log(text)
+    if (text) {
+      setLists(newList)
+      fetch("http://localhost:3001/lists/" + id, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: text }),
+      })
+        .then((res) => res.json())
+        .then((res) => console.log(res))
+    }
+  }
   return (
     <div className='todo'>
       <div className='todo__sidebar'>
@@ -31,15 +63,22 @@ function App() {
                 </svg>
               ),
               name: "Все задачи",
-              active: true,
             },
           ]}
         />
-        <List setLists={setLists} isRemovable items={lists} />
-        <AddListButton setLists={setLists} lists={lists} colors={DB.colors} />
+        <List
+          activeItem={activeItem}
+          onClickItem={(item) => setActiveItem(item)}
+          setLists={setLists}
+          isRemovable
+          items={lists}
+        />
+        <AddListButton setLists={setLists} lists={lists} colors={color} />
       </div>
       <div className='todo__tasks'>
-        <Tasks />
+        {lists && activeItem && (
+          <Tasks renameTitle={renameTitle} list={activeItem} />
+        )}
       </div>
     </div>
   )

@@ -1,10 +1,16 @@
 .tasks {
+  input {
+    &:disabled {
+      border: none;
+    }
+  }
   &__title {
     color: #64c4ed;
     font-family: Montserrat;
     font-size: 32px;
     line-height: 39px;
     padding-bottom: 20px;
+
     border-bottom: 1px solid #f2f2f2;
     img {
       opacity: 0.5;
@@ -14,10 +20,19 @@
   }
   &__items {
     margin-top: 30px;
+    h2 {
+      font-size: 36px;
+      justify-content: center;
+      display: flex;
+      color: #70787cd3;
+      position: absolute;
+      left: 50%;
+      top: 40%;
+    }
     &-row {
       display: flex;
       align-items: center;
-
+      padding: 10px;
       p {
         margin-left: 15px;
       }

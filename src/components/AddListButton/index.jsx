@@ -1,25 +1,38 @@
-import React from "react"
+import React, { useEffect } from "react"
 import Badge from "../Badge"
 import List from "../List"
 import close from "../../assets/img/close.svg"
-import { v4 } from "uuid"
 
 import "./AddListPoppup.scss"
 function AddListButton({ colors, lists, setLists }) {
   const [visiblePoppup, setVisiblePoppup] = React.useState(false)
-  const [badgeColor, setBadgeColor] = React.useState(colors[0].id)
+  const [badgeColor, setBadgeColor] = React.useState(0)
   const [input, setInput] = React.useState("")
+  useEffect(() => {
+    if (Array.isArray(colors)) {
+      setBadgeColor(colors[0].id)
+    }
+  }, [colors])
   const handleAddList = () => {
-    const color = colors.filter((color) => color.id === badgeColor)[0].name
     if (!input) return false
-    setLists([
-      ...lists,
-      {
-        id: v4(),
-        name: input,
-        color,
+
+    const color = colors.filter((color) => color.id === badgeColor)[0].name
+    const newList = {
+      name: input,
+      colorId: badgeColor,
+      color: { name: color },
+    }
+    fetch("http://localhost:3001/lists", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-    ])
+      body: JSON.stringify(newList),
+    })
+      .then((res) => res.json())
+      .then(() => setLists([...lists, newList]))
+
     setInput("")
     setVisiblePoppup(false)
   }
@@ -80,15 +93,16 @@ function AddListButton({ colors, lists, setLists }) {
             onChange={(e) => setInput(e.target.value)}
           />
           <div className='add__list-colors'>
-            {colors.map((item) => (
-              <Badge
-                badgeColor={badgeColor}
-                setBadgeColor={setBadgeColor}
-                color={item.name}
-                colorId={item.id}
-                key={item.id}
-              />
-            ))}
+            {colors &&
+              colors.map((item) => (
+                <Badge
+                  badgeColor={badgeColor}
+                  setBadgeColor={setBadgeColor}
+                  color={item.name}
+                  colorId={item.id}
+                  key={item.id}
+                />
+              ))}
           </div>
           <button onClick={handleAddList} className='button'>
             Добавить Папку
